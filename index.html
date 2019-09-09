@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Estimate App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="./styles.css"/>
+
+    <script type="text/javascript" src="./js/ui.js"></script>
+    <script type="text/javascript" src="./js/cache.js"></script>
+    <script type="text/javascript" src="./js/timer.js"></script>
+    <script type="text/javascript" src="./js/states.js"></script>
+</head>
+<body>
+<div class="container mt-50 ">
+    <div class="col card">
+        <h2 class="mt-50">Estimate a User Story</h2>
+        <p>
+            This tool allows you to estimate hours for given User Story.
+        </p>
+        <form class="mb-50" onsubmit="stateManager.goToState(Application.State.Submit); return false;">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">#</div>
+                </div>
+                <input type="number" class="form-control" id="usNumber" placeholder="US Number">
+                <div class="input-group-append">
+                    <input type="submit" class="btn btn-primary" id="submit" value="Estimate">
+                </div>
+                <div class="invalid-feedback">
+                    Please enter a user story number.
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="container mt-50" style="display: none;" id="estimating-box">
+    <div class="col card">
+        <div id="estimating" class="text-center mt-50 mb-50">
+            <i class="fa fa-spinner fa-spin"></i>
+            Estimating... (<span id="estimatingPercentValue"></span>)
+        </div>
+    </div>
+</div>
+<div id="estimation-box" style="display: none">
+    <div class="container">
+        <div class="col card mt-50">
+            <div class="form-row mt-50">
+                <p class="col col-sm-6">The estimation is:</p>
+                <p class="col col-sm-6"><b><span id="estimation">0</span> hours</b></p>
+            </div>
+            <div class="form-row mb-30">
+                <p class="col col-sm-6">The risk is:</p>
+                <p class="col col-sm-6"><b><span id="risk">0</span>%</b></p>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="col mt-50 mb-50 text-center">
+            <p>Do you like the estimation?</p>
+            <div class="btn-group" role="group">
+                <button class="btn btn-success" onclick="stateManager.goToState(Application.State.Initialize)">
+                    Yes! Estimate next US
+                </button>
+                <button class="btn btn-danger" onclick="stateManager.goToState(Application.State.ReEstimate)">
+                    No, recalculate it!
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+  const stateManager = new Application(UI, ElapsedTimer);
+
+  stateManager.goToState(Application.State.Initialize);
+</script>
+</body>
+</html>
