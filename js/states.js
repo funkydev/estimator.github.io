@@ -42,7 +42,7 @@ Application.State.Submit = function (stateManager) {
   this.enter = function () {
     const usNumber = this.app.ui.getUSNumberValue();
 
-    if (!usNumber || usNumber < 30000) {
+    if (!usNumber || usNumber <= 0) {
       return this.app.goToState(Application.State.ValidationError);
     }
 
